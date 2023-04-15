@@ -1,3 +1,8 @@
+/* Create a Comment component as default export 
+Takes in author and content as props
+Returns the author's capitalised initials in a circle
+Also displays the author's name and content of the comment*/
+
 function Comment({ author, content }) {
 	const initials = author
 		.split(' ')
