@@ -1,11 +1,10 @@
+import React, { useState } from 'react';
 import BlogPost from '../BlogPost';
 import CommentList from '../CommentList';
-// import Comment from '../Comment';
 import CommentForm from '../CommentForm';
-import { useState } from 'react';
-import { blog } from '../../data/blogs.js';
+import { blog } from '../../data/blogs';
 
-function App() {
+const App = () => {
 	const [comments, setComments] = useState([
 		{
 			id: 'kskBC5HZ8qgNQUiW6If6q',
@@ -19,18 +18,25 @@ function App() {
 		},
 	]);
 
-	const addComment = (author, comment) => {
-		const newComment = { id: Date.now().toString(), author, content: comment };
-		setComments([...comments, newComment]);
+	const handleAddComment = (author, comment) => {
+		if (!comment) {
+			return;
+		}
+		const newComment = {
+			id: new Date().toISOString(),
+			author: author || 'Anon Author',
+			content: comment,
+		};
+		setComments(prevComments => [...prevComments, newComment]);
 	};
 
 	return (
-		<main>
+		<div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 20px' }}>
 			<BlogPost blog={blog} />
+			<CommentForm onSubmit={handleAddComment} />
 			<CommentList comments={comments} />
-			<CommentForm onSubmit={addComment} />
-		</main>
+		</div>
 	);
-}
+};
 
 export default App;

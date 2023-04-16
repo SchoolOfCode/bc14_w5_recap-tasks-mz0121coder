@@ -1,12 +1,17 @@
 import Comment from '../Comment';
 
 function CommentList({ comments }) {
-	return comments.map(comment => (
-		<Comment
-			key={comment.id}
-			author={comment.author}
-			content={comment.content}></Comment>
-	));
+	return (
+		<div>
+			{comments.map(comment => (
+				<Comment
+					key={comment.id}
+					author={comment.author}
+					content={comment.content}
+				/>
+			))}
+		</div>
+	);
 }
 
 export default CommentList;
