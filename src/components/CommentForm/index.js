@@ -7,50 +7,43 @@ Use a default name for the author
 
 Clear the input for comment after calling onSubmit, but not for the name
 */
+import React, { useState } from 'react';
 
-import { useState } from 'react';
 function CommentForm({ onSubmit }) {
-	const [author, setAuthor] = useState('Anon Author');
+	const [author, setAuthor] = useState('');
 	const [comment, setComment] = useState('');
 
-	const handleSubmit = e => {
-		e.preventDefault();
-		if (comment.trim() !== '') {
-			onSubmit({ author, comment });
-			setComment('');
-		}
+	const handleAuthorChange = event => {
+		setAuthor(event.target.value);
+	};
+
+	const handleCommentChange = event => {
+		setComment(event.target.value);
+	};
+
+	const handleSubmit = event => {
+		event.preventDefault();
+		onSubmit(author, comment);
+		setAuthor('');
+		setComment('');
 	};
 
 	return (
-		<form action='submit' onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit}>
 			<div>
-				<label htmlFor='author'>Author:</label>
+				<label htmlFor='author'>Name:</label>
 				<input
 					type='text'
 					id='author'
-					placeholder='Anon Author'
-					onChange={e => {
-						setAuthor(e.target.value);
-					}}
 					value={author}
+					onChange={handleAuthorChange}
 				/>
 			</div>
 			<div>
-				<label htmlFor='comment' id='comment'>
-					Comment:
-				</label>
-				<textarea
-					name='comment'
-					id='comment'
-					cols='30'
-					rows='10'
-					onChange={e => {
-						setComment(e.target.value);
-					}}>
-					{comment}
-				</textarea>
+				<label htmlFor='comment'>Comment:</label>
+				<textarea id='comment' value={comment} onChange={handleCommentChange} />
 			</div>
-			<button>Submit</button>
+			<button type='submit'>Submit</button>
 		</form>
 	);
 }
